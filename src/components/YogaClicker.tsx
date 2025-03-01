@@ -70,11 +70,29 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
   // Calculate progress to next level
   const requiredExp = level * 100;
   const expProgress = (experience / requiredExp) * 100;
+
+  // Get placeholder image based on pose name
+  const getPoseImage = (pose: YogaPose) => {
+    switch(pose.name.toLowerCase()) {
+      case 'mountain pose':
+        return 'https://images.unsplash.com/photo-1566501206188-5dd0cf160a0e?w=800&auto=format&fit=crop&q=60';
+      case 'downward dog':
+        return 'https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=800&auto=format&fit=crop&q=60';
+      case 'warrior i':
+        return 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=800&auto=format&fit=crop&q=60';
+      case 'tree pose':
+        return 'https://images.unsplash.com/photo-1556816723-1ce827b9cfca?w=800&auto=format&fit=crop&q=60';
+      case 'crow pose':
+        return 'https://images.unsplash.com/photo-1611094607507-8c8173e5cf40?w=800&auto=format&fit=crop&q=60';
+      default:
+        return 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&auto=format&fit=crop&q=60';
+    }
+  };
   
   return (
     <div className="h-screen w-full flex flex-col p-4 overflow-hidden bg-background">
       {/* Player stats */}
-      <div className="w-full glass rounded-2xl p-4 mb-4 animate-fade-in">
+      <div className="w-full glass rounded-2xl p-4 mb-4 animate-fade-in bg-gradient-to-r from-yoga/10 to-yoga-light/30 backdrop-blur-sm">
         <div className="flex justify-between items-center">
           <div>
             <h3 className="text-xs uppercase tracking-wider text-muted-foreground">Level {level}</h3>
@@ -109,17 +127,22 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
             onClick={handleClick}
           >
             <motion.div
-              className={`p-20 rounded-full bg-yoga-light border-4 ${isClicking ? 'border-yoga-dark' : 'border-yoga'} cursor-pointer relative overflow-hidden`}
+              className={`p-2 rounded-full cursor-pointer relative overflow-hidden w-64 h-64 flex items-center justify-center`}
               animate={isClicking ? { scale: 0.95 } : { scale: 1 }}
               transition={{ duration: 0.15 }}
             >
+              <div className="absolute inset-0 bg-yoga-light/20 backdrop-blur-sm rounded-full" />
+              <img 
+                src={getPoseImage(activePose)}
+                alt={activePose.name}
+                className="w-full h-full object-cover rounded-full shadow-inner border-4 border-yoga"
+              />
               <motion.div
-                className="text-2xl font-bold absolute inset-0 flex items-center justify-center"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
+                className="absolute inset-0 rounded-full flex items-center justify-center bg-gradient-to-b from-transparent to-black/30"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
               >
-                {activePose?.name || 'Mountain Pose'}
+                <span className="text-xl font-bold text-white drop-shadow-md">{activePose.name}</span>
               </motion.div>
             </motion.div>
             
@@ -134,7 +157,7 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
                 >
-                  +{activePose?.energyPerClick || 1}
+                  +{activePose.energyPerClick || 1}
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -156,20 +179,30 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
           
           <div className="grid grid-cols-1 gap-4">
             {yogaPoses.map(pose => (
-              <Card key={pose.id} className={`p-4 ${pose.unlocked ? 'border-yoga border-2' : ''} relative`}>
+              <Card key={pose.id} className={`p-4 ${pose.unlocked ? 'border-yoga border-2' : ''} relative overflow-hidden`}>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-yoga/5 z-0" />
                 <div 
-                  className="absolute top-2 right-2 text-muted-foreground cursor-pointer"
+                  className="absolute top-2 right-2 text-muted-foreground cursor-pointer z-10"
                   onClick={() => setShowPoseInfo(showPoseInfo === pose.id ? null : pose.id)}
                 >
                   ⓘ
                 </div>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="font-bold">{pose.name}</h3>
-                    {showPoseInfo === pose.id && (
-                      <p className="text-sm text-muted-foreground mt-1">{pose.description}</p>
-                    )}
-                    <p className="text-sm">+{pose.energyPerClick} energy per click</p>
+                <div className="flex justify-between items-center z-10 relative">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-yoga/50">
+                      <img 
+                        src={getPoseImage(pose)} 
+                        alt={pose.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-bold">{pose.name}</h3>
+                      {showPoseInfo === pose.id && (
+                        <p className="text-sm text-muted-foreground mt-1">{pose.description}</p>
+                      )}
+                      <p className="text-sm">+{pose.energyPerClick} energy per click</p>
+                    </div>
                   </div>
                   <div>
                     {pose.unlocked ? (
@@ -197,44 +230,71 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
           <p className="text-muted-foreground">Purchase upgrades to boost your energy production</p>
           
           <div className="grid grid-cols-1 gap-4">
-            {upgrades.map(upgrade => (
-              <Card key={upgrade.id} className={`p-4 ${upgrade.purchased ? 'border-energy border-2' : ''} relative`}>
-                <div 
-                  className="absolute top-2 right-2 text-muted-foreground cursor-pointer"
-                  onClick={() => setShowUpgradeInfo(showUpgradeInfo === upgrade.id ? null : upgrade.id)}
-                >
-                  ⓘ
-                </div>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h3 className="font-bold">{upgrade.name}</h3>
-                    {showUpgradeInfo === upgrade.id && (
-                      <p className="text-sm text-muted-foreground mt-1">{upgrade.description}</p>
-                    )}
-                    <p className="text-sm">
-                      {upgrade.effect.type === 'multiplier' && `${upgrade.effect.value}x multiplier`}
-                      {upgrade.effect.type === 'autoClick' && `+${upgrade.effect.value} energy/sec`}
-                    </p>
+            {upgrades.map(upgrade => {
+              // Get appropriate upgrade image
+              const upgradeImage = (() => {
+                if (upgrade.name.includes('Mat')) {
+                  return 'https://images.unsplash.com/photo-1600881333168-2ef49b341f30?w=800&auto=format&fit=crop&q=60';
+                } else if (upgrade.name.includes('Cushion')) {
+                  return 'https://images.unsplash.com/photo-1595578069152-55496318ee58?w=800&auto=format&fit=crop&q=60';
+                } else if (upgrade.name.includes('Blocks')) {
+                  return 'https://images.unsplash.com/photo-1558017487-06bf9f82613a?w=800&auto=format&fit=crop&q=60';
+                } else if (upgrade.name.includes('Garden')) {
+                  return 'https://images.unsplash.com/photo-1464823063530-08f10ed1a2dd?w=800&auto=format&fit=crop&q=60';
+                } else {
+                  return 'https://images.unsplash.com/photo-1611647832580-377268dffb38?w=800&auto=format&fit=crop&q=60';
+                }
+              })();
+              
+              return (
+                <Card key={upgrade.id} className={`p-4 ${upgrade.purchased ? 'border-energy border-2' : ''} relative overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-energy/5 z-0" />
+                  <div 
+                    className="absolute top-2 right-2 text-muted-foreground cursor-pointer z-10"
+                    onClick={() => setShowUpgradeInfo(showUpgradeInfo === upgrade.id ? null : upgrade.id)}
+                  >
+                    ⓘ
                   </div>
-                  <div>
-                    {upgrade.purchased ? (
-                      <Button variant="outline" disabled className="btn-effect">
-                        Purchased
-                      </Button>
-                    ) : (
-                      <Button 
-                        onClick={() => onBuyUpgrade(upgrade.id)} 
-                        disabled={energy < upgrade.price}
-                        className="btn-effect"
-                        variant="secondary"
-                      >
-                        {upgrade.price} Energy
-                      </Button>
-                    )}
+                  <div className="flex justify-between items-center z-10 relative">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-energy/50">
+                        <img 
+                          src={upgradeImage}
+                          alt={upgrade.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-bold">{upgrade.name}</h3>
+                        {showUpgradeInfo === upgrade.id && (
+                          <p className="text-sm text-muted-foreground mt-1">{upgrade.description}</p>
+                        )}
+                        <p className="text-sm">
+                          {upgrade.effect.type === 'multiplier' && `${upgrade.effect.value}x multiplier`}
+                          {upgrade.effect.type === 'autoClick' && `+${upgrade.effect.value} energy/sec`}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      {upgrade.purchased ? (
+                        <Button variant="outline" disabled className="btn-effect">
+                          Purchased
+                        </Button>
+                      ) : (
+                        <Button 
+                          onClick={() => onBuyUpgrade(upgrade.id)} 
+                          disabled={energy < upgrade.price}
+                          className="btn-effect"
+                          variant="secondary"
+                        >
+                          {upgrade.price} Energy
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              );
+            })}
           </div>
         </TabsContent>
       </Tabs>

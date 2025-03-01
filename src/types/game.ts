@@ -8,7 +8,7 @@ export interface YogaPose {
   energyPerClick: number;
   price: number;
   level: number;
-  image: string;
+  image: string;  // This will now hold the actual image URL
   unlocked: boolean;
 }
 

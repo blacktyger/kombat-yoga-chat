@@ -10,7 +10,7 @@ export const mockYogaPoses: YogaPose[] = [
     energyPerClick: 1,
     price: 0,
     level: 1,
-    image: 'mountain-pose.svg',
+    image: 'https://images.unsplash.com/photo-1566501206188-5dd0cf160a0e?w=800&auto=format&fit=crop&q=60',
     unlocked: true
   },
   {
@@ -20,7 +20,7 @@ export const mockYogaPoses: YogaPose[] = [
     energyPerClick: 2,
     price: 50,
     level: 2,
-    image: 'downward-dog.svg',
+    image: 'https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=800&auto=format&fit=crop&q=60',
     unlocked: false
   },
   {
@@ -30,7 +30,7 @@ export const mockYogaPoses: YogaPose[] = [
     energyPerClick: 5,
     price: 200,
     level: 3,
-    image: 'warrior-pose.svg',
+    image: 'https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=800&auto=format&fit=crop&q=60',
     unlocked: false
   },
   {
@@ -40,7 +40,7 @@ export const mockYogaPoses: YogaPose[] = [
     energyPerClick: 10,
     price: 500,
     level: 4,
-    image: 'tree-pose.svg',
+    image: 'https://images.unsplash.com/photo-1556816723-1ce827b9cfca?w=800&auto=format&fit=crop&q=60',
     unlocked: false
   },
   {
@@ -50,7 +50,7 @@ export const mockYogaPoses: YogaPose[] = [
     energyPerClick: 25,
     price: 1000,
     level: 5,
-    image: 'crow-pose.svg',
+    image: 'https://images.unsplash.com/photo-1611094607507-8c8173e5cf40?w=800&auto=format&fit=crop&q=60',
     unlocked: false
   }
 ];

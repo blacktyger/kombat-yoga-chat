@@ -37,21 +37,28 @@ const Index = () => {
 
   if (isLoading) {
     return (
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-background">
+      <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-yoga-light/30 to-background">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <h1 className="text-3xl font-bold mb-4">Kombat Yoga</h1>
-          <p className="text-muted-foreground mb-8">Prepare for inner peace...</p>
+          <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yoga to-energy">Kombat Yoga</h1>
+          <p className="text-muted-foreground mb-8">Find your inner peace... and power</p>
           
-          <motion.div 
-            className="w-12 h-12 rounded-full border-4 border-t-yoga border-yoga/30"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          />
+          <div className="relative w-24 h-24 mx-auto">
+            <img 
+              src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=800&auto=format&fit=crop&q=60" 
+              alt="Yoga" 
+              className="w-full h-full object-cover rounded-full opacity-60"
+            />
+            <motion.div 
+              className="absolute inset-0 rounded-full border-4 border-t-yoga border-yoga/30"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
         </motion.div>
       </div>
     );
@@ -62,7 +69,7 @@ const Index = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-background text-foreground flex flex-col"
+      className="min-h-screen bg-gradient-to-br from-yoga-light/5 to-background text-foreground flex flex-col"
     >
       <main className="flex-1 flex flex-col">
         <Tabs defaultValue="game" className="flex-1 flex flex-col" value={activeTab} onValueChange={setActiveTab}>
@@ -88,7 +95,7 @@ const Index = () => {
             <Settings onReset={resetGame} />
           </TabsContent>
           
-          <TabsList className="grid grid-cols-3 rounded-none border-t">
+          <TabsList className="grid grid-cols-3 rounded-none border-t backdrop-blur-sm">
             <TabsTrigger value="game" className="rounded-none pb-2 pt-2">
               <div className="flex flex-col items-center">
                 <span className="text-lg">🧘</span>
