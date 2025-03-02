@@ -17,10 +17,10 @@ const Settings: React.FC<SettingsProps> = ({ onReset }) => {
   
   return (
     <div className="p-4 flex flex-col h-full">
-      <h2 className="text-2xl font-bold mb-4">Settings</h2>
+      <h2 className="text-2xl font-bold mb-4 sunset-text">Settings</h2>
       
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between dark-glass p-4 rounded-lg">
           <div>
             <h3 className="font-medium">Sound Effects</h3>
             <p className="text-sm text-muted-foreground">Enable game sound effects</p>
@@ -28,7 +28,7 @@ const Settings: React.FC<SettingsProps> = ({ onReset }) => {
           <Switch defaultChecked id="sound-mode" />
         </div>
         
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between dark-glass p-4 rounded-lg">
           <div>
             <h3 className="font-medium">Notifications</h3>
             <p className="text-sm text-muted-foreground">Receive game notifications</p>
@@ -36,7 +36,7 @@ const Settings: React.FC<SettingsProps> = ({ onReset }) => {
           <Switch id="notification-mode" />
         </div>
         
-        <div className="border-t pt-6">
+        <div className="border-t border-white/10 pt-6">
           <h3 className="font-medium mb-2">About Kombat Yoga</h3>
           <p className="text-sm text-muted-foreground mb-4">
             A zen clicker game where you gather energy through yoga poses. Improve your practice, 
@@ -45,12 +45,12 @@ const Settings: React.FC<SettingsProps> = ({ onReset }) => {
           <p className="text-xs text-muted-foreground">Version 0.1.0 (Proof of Concept)</p>
         </div>
         
-        <div className="border-t pt-6">
+        <div className="border-t border-white/10 pt-6">
           <Dialog open={showResetConfirm} onOpenChange={setShowResetConfirm}>
             <DialogTrigger asChild>
               <Button variant="destructive" className="w-full">Reset Progress</Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="dark-glass border border-white/10">
               <DialogHeader>
                 <DialogTitle>Reset Game Progress</DialogTitle>
                 <DialogDescription>

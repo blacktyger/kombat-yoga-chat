@@ -90,13 +90,13 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
   };
   
   return (
-    <div className="h-screen w-full flex flex-col p-4 overflow-hidden bg-background">
+    <div className="h-screen w-full flex flex-col p-4 overflow-hidden">
       {/* Player stats */}
-      <div className="w-full glass rounded-2xl p-4 mb-4 animate-fade-in bg-gradient-to-r from-yoga/10 to-yoga-light/30 backdrop-blur-sm">
+      <div className="w-full dark-glass rounded-2xl p-4 mb-4 animate-fade-in">
         <div className="flex justify-between items-center">
           <div>
             <h3 className="text-xs uppercase tracking-wider text-muted-foreground">Level {level}</h3>
-            <h2 className="text-2xl font-bold">{energy.toLocaleString()} Energy</h2>
+            <h2 className="text-2xl font-bold sunset-text">{energy.toLocaleString()} Energy</h2>
           </div>
           <div className="text-right">
             <p className="text-xs text-muted-foreground">Total Energy</p>
@@ -115,10 +115,10 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
       
       {/* Main game area */}
       <Tabs defaultValue="play" className="flex-1 flex flex-col" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid grid-cols-3 mb-4">
-          <TabsTrigger value="play" className="text-md">Play</TabsTrigger>
-          <TabsTrigger value="poses" className="text-md">Poses</TabsTrigger>
-          <TabsTrigger value="upgrades" className="text-md">Upgrades</TabsTrigger>
+        <TabsList className="grid grid-cols-3 mb-4 dark-glass">
+          <TabsTrigger value="play" className="text-md data-[state=active]:bg-orange-500/20">Play</TabsTrigger>
+          <TabsTrigger value="poses" className="text-md data-[state=active]:bg-orange-500/20">Poses</TabsTrigger>
+          <TabsTrigger value="upgrades" className="text-md data-[state=active]:bg-orange-500/20">Upgrades</TabsTrigger>
         </TabsList>
         
         <TabsContent value="play" className="flex-1 flex flex-col">
@@ -127,18 +127,18 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
             onClick={handleClick}
           >
             <motion.div
-              className={`p-2 rounded-full cursor-pointer relative overflow-hidden w-64 h-64 flex items-center justify-center`}
+              className="p-2 rounded-full cursor-pointer relative overflow-hidden w-64 h-64 flex items-center justify-center"
               animate={isClicking ? { scale: 0.95 } : { scale: 1 }}
               transition={{ duration: 0.15 }}
             >
-              <div className="absolute inset-0 bg-yoga-light/20 backdrop-blur-sm rounded-full" />
+              <div className="absolute inset-0 bg-black/40 backdrop-blur-sm rounded-full" />
               <img 
                 src={getPoseImage(activePose)}
                 alt={activePose.name}
-                className="w-full h-full object-cover rounded-full shadow-inner border-4 border-yoga"
+                className="w-full h-full object-cover rounded-full shadow-inner border-4 border-orange-500/50"
               />
               <motion.div
-                className="absolute inset-0 rounded-full flex items-center justify-center bg-gradient-to-b from-transparent to-black/30"
+                className="absolute inset-0 rounded-full flex items-center justify-center bg-gradient-to-b from-transparent to-black/60"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
@@ -151,7 +151,7 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
               {energyParticles.map(particle => (
                 <motion.div
                   key={particle.id}
-                  className="absolute text-lg font-bold text-yoga-dark"
+                  className="absolute text-lg font-bold text-orange-400"
                   initial={{ x: particle.x, y: particle.y, opacity: 1, scale: 1 }}
                   animate={{ y: particle.y - 80, opacity: 0, scale: 1.5 }}
                   exit={{ opacity: 0 }}
@@ -174,13 +174,13 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
         </TabsContent>
         
         <TabsContent value="poses" className="space-y-4 flex-1 overflow-y-auto pb-4 no-scrollbar">
-          <h2 className="text-xl font-bold">Yoga Poses</h2>
+          <h2 className="text-xl font-bold sunset-text">Yoga Poses</h2>
           <p className="text-muted-foreground">Unlock new poses to increase your energy gain per click</p>
           
           <div className="grid grid-cols-1 gap-4">
             {yogaPoses.map(pose => (
-              <Card key={pose.id} className={`p-4 ${pose.unlocked ? 'border-yoga border-2' : ''} relative overflow-hidden`}>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-yoga/5 z-0" />
+              <Card key={pose.id} className={`p-4 ${pose.unlocked ? 'border-orange-500/50 border-2' : 'dark-glass'} relative overflow-hidden`}>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent to-orange-500/5 z-0" />
                 <div 
                   className="absolute top-2 right-2 text-muted-foreground cursor-pointer z-10"
                   onClick={() => setShowPoseInfo(showPoseInfo === pose.id ? null : pose.id)}
@@ -189,7 +189,7 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
                 </div>
                 <div className="flex justify-between items-center z-10 relative">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-yoga/50">
+                    <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-orange-500/30">
                       <img 
                         src={getPoseImage(pose)} 
                         alt={pose.name} 
@@ -213,7 +213,7 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
                       <Button 
                         onClick={() => onBuyPose(pose.id)} 
                         disabled={energy < pose.price}
-                        className="btn-effect"
+                        className="btn-effect bg-orange-500/80 hover:bg-orange-500"
                       >
                         {pose.price} Energy
                       </Button>
@@ -226,7 +226,7 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
         </TabsContent>
         
         <TabsContent value="upgrades" className="space-y-4 flex-1 overflow-y-auto pb-4 no-scrollbar">
-          <h2 className="text-xl font-bold">Upgrades</h2>
+          <h2 className="text-xl font-bold sunset-text">Upgrades</h2>
           <p className="text-muted-foreground">Purchase upgrades to boost your energy production</p>
           
           <div className="grid grid-cols-1 gap-4">
@@ -247,8 +247,8 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
               })();
               
               return (
-                <Card key={upgrade.id} className={`p-4 ${upgrade.purchased ? 'border-energy border-2' : ''} relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-energy/5 z-0" />
+                <Card key={upgrade.id} className={`p-4 ${upgrade.purchased ? 'border-amber-400/50 border-2' : 'dark-glass'} relative overflow-hidden`}>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-amber-500/5 z-0" />
                   <div 
                     className="absolute top-2 right-2 text-muted-foreground cursor-pointer z-10"
                     onClick={() => setShowUpgradeInfo(showUpgradeInfo === upgrade.id ? null : upgrade.id)}
@@ -257,7 +257,7 @@ const YogaClicker: React.FC<YogaClickerProps> = ({
                   </div>
                   <div className="flex justify-between items-center z-10 relative">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-energy/50">
+                      <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-amber-500/30">
                         <img 
                           src={upgradeImage}
                           alt={upgrade.name}

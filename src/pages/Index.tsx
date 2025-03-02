@@ -37,14 +37,14 @@ const Index = () => {
 
   if (isLoading) {
     return (
-      <div className="h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-yoga-light/30 to-background">
+      <div className="h-screen w-full flex flex-col items-center justify-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
           className="text-center"
         >
-          <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-yoga to-energy">Kombat Yoga</h1>
+          <h1 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-amber-300">Kombat Yoga</h1>
           <p className="text-muted-foreground mb-8">Find your inner peace... and power</p>
           
           <div className="relative w-24 h-24 mx-auto">
@@ -54,7 +54,7 @@ const Index = () => {
               className="w-full h-full object-cover rounded-full opacity-60"
             />
             <motion.div 
-              className="absolute inset-0 rounded-full border-4 border-t-yoga border-yoga/30"
+              className="absolute inset-0 rounded-full border-4 border-t-orange-500 border-orange-500/30"
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
@@ -69,7 +69,7 @@ const Index = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen bg-gradient-to-br from-yoga-light/5 to-background text-foreground flex flex-col"
+      className="min-h-screen flex flex-col"
     >
       <main className="flex-1 flex flex-col">
         <Tabs defaultValue="game" className="flex-1 flex flex-col" value={activeTab} onValueChange={setActiveTab}>
@@ -95,20 +95,20 @@ const Index = () => {
             <Settings onReset={resetGame} />
           </TabsContent>
           
-          <TabsList className="grid grid-cols-3 rounded-none border-t backdrop-blur-sm">
-            <TabsTrigger value="game" className="rounded-none pb-2 pt-2">
+          <TabsList className="grid grid-cols-3 rounded-none border-t dark-glass backdrop-blur-sm">
+            <TabsTrigger value="game" className="rounded-none pb-2 pt-2 data-[state=active]:bg-orange-500/20">
               <div className="flex flex-col items-center">
                 <span className="text-lg">🧘</span>
                 <span className="text-xs mt-1">Play</span>
               </div>
             </TabsTrigger>
-            <TabsTrigger value="leaderboard" className="rounded-none pb-2 pt-2">
+            <TabsTrigger value="leaderboard" className="rounded-none pb-2 pt-2 data-[state=active]:bg-orange-500/20">
               <div className="flex flex-col items-center">
                 <span className="text-lg">🏆</span>
                 <span className="text-xs mt-1">Ranking</span>
               </div>
             </TabsTrigger>
-            <TabsTrigger value="settings" className="rounded-none pb-2 pt-2">
+            <TabsTrigger value="settings" className="rounded-none pb-2 pt-2 data-[state=active]:bg-orange-500/20">
               <div className="flex flex-col items-center">
                 <span className="text-lg">⚙️</span>
                 <span className="text-xs mt-1">Settings</span>

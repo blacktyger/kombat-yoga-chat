@@ -12,7 +12,7 @@ interface LeaderboardProps {
 const Leaderboard: React.FC<LeaderboardProps> = ({ entries, currentPlayerId }) => {
   return (
     <div className="p-4 flex flex-col h-full">
-      <h2 className="text-2xl font-bold mb-4">Leaderboard</h2>
+      <h2 className="text-2xl font-bold mb-4 sunset-text">Leaderboard</h2>
       
       <div className="space-y-3 flex-1 overflow-y-auto pb-4 no-scrollbar">
         {entries.map((entry, index) => {
@@ -26,9 +26,9 @@ const Leaderboard: React.FC<LeaderboardProps> = ({ entries, currentPlayerId }) =
               transition={{ delay: index * 0.05 }}
             >
               <Card 
-                className={`p-3 ${isCurrentPlayer ? 'border-yoga border-2' : ''} flex items-center`}
+                className={`p-3 ${isCurrentPlayer ? 'border-orange-500/50 border-2' : 'dark-glass'} flex items-center`}
               >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 ${index < 3 ? 'bg-yoga text-white' : 'bg-muted'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3 ${index < 3 ? 'bg-gradient-to-br from-orange-500 to-amber-500 text-white' : 'bg-black/40'}`}>
                   {entry.rank}
                 </div>
                 <div className="flex-1">
